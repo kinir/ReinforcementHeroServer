@@ -5,7 +5,5 @@ services:
     build: "./web"
     ports:
       - "5000:5000"
-    links:
-      - rhmongodb
-  rhmongodb:
+  db:
     build: "./db"
