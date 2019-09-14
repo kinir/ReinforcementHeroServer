@@ -1,0 +1,26 @@
+from flask import request
+from flask_restful import Resource
+
+from ..services import agent_service as service
+
+class Agent(Resource):
+    def put(self):
+        student_id = request.form["student_id"]
+        env = request.form["env"]
+        pickled_agent = request.files["agent"].read()
+        
+        agent = service.validate_pickle(pickled_agent)
+
+        if agent:
+            score = service.evaluate_agent(agent)
+
+        service.submit_agent(None, None)
+
+        return score
+
+    def get(self):
+        try:
+            service.save_to_db("Hello?!")
+            return "Done!"
+        except Exception as e:
+            return repr(e)
