@@ -9,12 +9,18 @@ class Agent(Resource):
         env = request.form["env"]
         pickled_agent = request.files["agent"].read()
         
-        agent = service.validate_pickle(pickled_agent)
+        try:
 
-        if agent:
+            # Check if the pickled file meeting our requirements
+            agent = service.validate_pickle(pickled_agent)
+
+            # Evaluate the average reward of the agent
             score = service.evaluate_agent(agent)
 
-        service.submit_agent(None, None)
+            # Save the agent with his score to the db
+            service.submit_agent(None, None)
+        except Exception as e:
+            return repr(e)
 
         return score
 

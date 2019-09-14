@@ -25,12 +25,15 @@ def evaluate_agent(agent):
     return total_reward / episode
 
 def validate_pickle(pickled_agent):
+    
+    # Load agent instance from bytestream
     agent = dill.loads(pickled_agent)
 
+    # Validate that the agent instance has next_action attribute and class Agent
     if "Agent" in repr(agent) and hasattr(agent, "next_action"):
         return agent
     else:
-        return None
+        raise Exception("Pickle file does not containt an agent of class 'Agent' or does not have next_action method.")
 
 
 def submit_agent(student_id, agent):
