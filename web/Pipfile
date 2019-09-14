@@ -10,6 +10,8 @@ python-dotenv = "*"
 flask = "*"
 flask-restful = "*"
 flask-pymongo = "*"
+dill = "*"
+gym = "*"
 
 [requires]
 python_version = "3.7"
