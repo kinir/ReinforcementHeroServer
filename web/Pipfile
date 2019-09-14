@@ -8,7 +8,8 @@ python-dotenv = "*"
 
 [packages]
 flask = "*"
-flask-mongoalchemy = "*"
+flask-restful = "*"
+flask-pymongo = "*"
 
 [requires]
 python_version = "3.7"
