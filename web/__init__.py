@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_mongoalchemy import MongoAlchemy
+#from flask_mongoalchemy import MongoAlchemy
 
 #db = MongoAlchemy()
 
