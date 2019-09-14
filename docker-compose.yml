@@ -5,5 +5,9 @@ services:
     build: "./web"
     ports:
       - "5000:5000"
+    env_file:
+      - .env
   db:
     build: "./db"
+    ports:
+      - "27017:27017"
