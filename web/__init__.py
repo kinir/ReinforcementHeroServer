@@ -1,10 +1,13 @@
+import os
 from flask import Flask
-#from flask_mongoalchemy import MongoAlchemy
+from flask_pymongo import PyMongo
 
-#db = MongoAlchemy()
+db = PyMongo()
 
 def init_app():
     app = Flask(__name__)
-    #db.init_app(app)
+
+    app.config["MONGO_URI"] = os.environ.get("DB")
+    db.init_app(app)
     
     return app

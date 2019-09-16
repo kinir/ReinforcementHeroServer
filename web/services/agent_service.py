@@ -1,6 +1,8 @@
 import dill
 import gym
 
+from .. import db
+
 def evaluate_agent(agent):
     env = gym.make('FrozenLake-v0')
 
@@ -40,4 +42,4 @@ def submit_agent(student_id, agent):
     return "Yes!"
 
 def save_to_db(name):
-    name / 2
+    db.db.environments.insert_one({ "name": name })

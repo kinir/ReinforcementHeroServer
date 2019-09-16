@@ -13,8 +13,5 @@ COPY . .
 # Install all packages
 RUN pipenv install --deploy --system --ignore-pipfile
 
-# Define env file for the flask app
-ENV FLASK_APP=app.py
-
 # Run app
 CMD ["flask", "run", "--host", "0.0.0.0"]
