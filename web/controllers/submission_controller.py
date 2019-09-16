@@ -3,7 +3,7 @@ from flask_restful import Resource
 
 from ..services import agent_service as service
 
-class Agent(Resource):
+class Submission(Resource):
     def put(self):
         student_id = request.form["student_id"]
         env = request.form["env"]
