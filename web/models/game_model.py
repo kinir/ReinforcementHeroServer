@@ -1,5 +1,3 @@
-from datetime import datetime
-
 class Game:
     def __init__(self, game_id, game_name, env_id, due_date, num_of_episods):
         self.game_id = game_id
