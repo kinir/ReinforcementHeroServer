@@ -1,12 +1,12 @@
 from flask import request
 from flask_restful import Resource
 
-from ..services import agent_service as service
+from ..services import submission_service as service
 
 class Submission(Resource):
     def put(self):
-        student_id = request.form["student_id"]
-        env = request.form["env"]
+        game_id = request.form["game_id"]
+        group_ids = request.form["group_ids"]
         pickled_agent = request.files["agent"].read()
         
         try:
@@ -14,15 +14,16 @@ class Submission(Resource):
             # Check if the pickled file meeting our requirements
             agent = service.validate_pickle(pickled_agent)
 
-            # Evaluate the average reward of the agent
-            score = service.evaluate_agent(agent)
+            # Evaluate the scores of the agent
+            scores = service.evaluate_agent(agent)
 
             # Save the agent with his score to the db
-            service.submit_agent(None, None)
+            service.submit_agent(game_id, group_ids, pickled_agent, scores)
+
         except Exception as e:
             return repr(e)
 
-        return score
+        return True
 
     def get(self):
         try:

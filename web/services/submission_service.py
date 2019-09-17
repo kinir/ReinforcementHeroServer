@@ -2,6 +2,7 @@ import dill
 import gym
 
 from .. import db
+from ..models.submission_model import Submission
 
 def evaluate_agent(agent):
     env = gym.make('FrozenLake-v0')
@@ -24,7 +25,11 @@ def evaluate_agent(agent):
 
         total_reward += episode_reward
 
-    return total_reward / episode
+    scores = {
+        "simpleAvg": total_reward / episode
+    }
+
+    return scores
 
 def validate_pickle(pickled_agent):
     
@@ -37,9 +42,9 @@ def validate_pickle(pickled_agent):
     else:
         raise Exception("Pickle file does not containt an agent of class 'Agent' or does not have next_action method.")
 
-
-def submit_agent(student_id, agent):
-    return "Yes!"
+def submit_agent(game_id, group_ids, agent, scores):
+    sub = Submission(game_id, group_ids, agent, scores)
+    db.db.submissions.insert_one(sub.to_dict())
 
 def save_to_db(name):
     db.db.environments.insert_one({ "name": name })
