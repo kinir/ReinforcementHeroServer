@@ -1,7 +1,6 @@
 import dill
 import gym
 
-from .. import db
 from ..models.submission_model import Submission
 
 def evaluate_agent(agent):
@@ -44,7 +43,4 @@ def validate_pickle(pickled_agent):
 
 def submit_agent(game_id, group_ids, agent, scores):
     sub = Submission(game_id, group_ids, agent, scores)
-    db.db.submissions.insert_one(sub.to_dict())
-
-def save_to_db(name):
-    db.db.environments.insert_one({ "name": name })
+    sub.insert_one()
