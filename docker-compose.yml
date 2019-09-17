@@ -5,8 +5,9 @@ services:
     build: "./web"
     ports:
       - "5000:5000"
-    env_file:
-      - .env
+    environment:
+      - FLASK_APP=app.py
+      - DB=mongodb://db:27017/RHS
   db:
     build: "./db"
     ports:
