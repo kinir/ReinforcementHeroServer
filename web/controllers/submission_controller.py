@@ -26,8 +26,4 @@ class Submission(Resource):
         return True
 
     def get(self):
-        try:
-            service.save_to_db("Hello?!")
-            return "Done!"
-        except Exception as e:
-            return repr(e)
+        pass
