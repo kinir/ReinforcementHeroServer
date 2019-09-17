@@ -14,11 +14,14 @@ class Submission(Resource):
             # Check if the pickled file meeting our requirements
             agent = service.validate_pickle(pickled_agent)
 
+            #TODO - add celeri 
+            #TODO - add score 0
             # Evaluate the scores of the agent
             scores = service.evaluate_agent(agent)
 
             # Save the agent with his score to the db
             service.submit_agent(game_id, group_ids, pickled_agent, scores)
+            #TODO - update score
 
         except Exception as e:
             return repr(e)
