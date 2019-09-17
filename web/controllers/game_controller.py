@@ -5,7 +5,6 @@ from ..services import game_service as service
 
 class Game(Resource):
     def put(self):
-        game_id = request.form["game_id"]
         game_name = request.form["group_name"]
         env_id = request.form["env_id"]
         due_date = request.form["due_date"]

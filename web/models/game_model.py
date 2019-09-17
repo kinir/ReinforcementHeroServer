@@ -1,6 +1,5 @@
 class Game:
-    def __init__(self, game_id, game_name, env_id, due_date, num_of_episods):
-        self.game_id = game_id
+    def __init__(self, game_name, env_id, due_date, num_of_episods):
         self.game_name = game_name
         self.env_id = env_id
         self.due_date = due_date
