@@ -10,5 +10,6 @@ class Game(Resource):
         due_date = request.form["due_date"]
         num_of_episods = request.form["num_of_episods"]
 
-    def get(self):
-        pass
+    def get(self, game_id):
+        # Fetch all the record(s)
+        game_properties = service.find_game(game_id)
