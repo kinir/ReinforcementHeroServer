@@ -5,11 +5,11 @@ from ..services import submission_service as service
 
 class Submission(Resource):
     def put(self):
-        game_id = request.form["game_id"]
-        group_ids = request.form["group_ids"]
-        pickled_agent = request.files["agent"].read()
         
         try:
+            game_id = request.form["game_id"]
+            group_ids = request.form["group_ids"]
+            pickled_agent = request.files["agent"].read()
 
             # Check if the pickled file meeting our requirements
             agent = service.validate_pickle(pickled_agent)
