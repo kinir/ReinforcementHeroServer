@@ -15,4 +15,4 @@ RUN pipenv install --deploy --system --ignore-pipfile
 
 # Run app
 CMD ["gunicorn", "-c", "gunicorn.config.py", "wsgi:app"]
-# CMD ["flask", "run", "--host", "0.0.0.0", "--with-threads"]
+#CMD ["flask", "run", "--host", "0.0.0.0"]

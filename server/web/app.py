@@ -10,7 +10,7 @@ app.app_context().push()
 
 # Add resources and routes
 api = Api(app)
-api.add_resource(Submission, "/api/submit")
+api.add_resource(Submission, "/api/submit", "/api/submit/<game_id>")
 
 # Test resource
 api.add_resource(Test, "/api/test")

@@ -44,3 +44,6 @@ def validate_pickle(pickled_agent):
 def submit_agent(game_id, group_ids, agent, scores):
     sub = Submission(game_id, group_ids, agent, scores)
     sub.insert_one()
+
+def find_submissions_by_game(game_id):
+    Submission.find_all_by_game(game_id)
