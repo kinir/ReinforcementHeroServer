@@ -2,7 +2,7 @@
 FROM python:3.7.1
 
 # Install pipenv
-RUN pip install pipenv
+RUN pip install pipenv gunicorn
 
 # Create a working directory
 WORKDIR /usr/src/app
@@ -14,4 +14,5 @@ COPY . .
 RUN pipenv install --deploy --system --ignore-pipfile
 
 # Run app
-CMD ["flask", "run", "--host", "0.0.0.0"]
+CMD ["gunicorn", "-c", "gunicorn.config.py", "wsgi:app"]
+#CMD ["flask", "run", "--host", "0.0.0.0"]

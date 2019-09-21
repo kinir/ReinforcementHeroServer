@@ -2,11 +2,11 @@ version: "3"
 
 services:
   web:
-    build: "./web"
+    build: "./server"
     ports:
       - "5000:5000"
     environment:
-      - FLASK_APP=app.py
+      - FLASK_APP=web/app.py
       - DB=mongodb://db:27017/RHS
   db:
     build: "./db"
