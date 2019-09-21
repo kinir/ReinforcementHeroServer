@@ -1,6 +1,8 @@
 import dill
 import gym
+from bson.objectid import ObjectId
 
+from .. import db
 from ..models.submission_model import Submission
 
 def evaluate_agent(agent):
@@ -35,15 +37,29 @@ def validate_pickle(pickled_agent):
     # Load agent instance from bytestream
     agent = dill.loads(pickled_agent)
 
-    # Validate that the agent instance has next_action attribute and class Agent
-    if "Agent" in repr(agent) and hasattr(agent, "next_action"):
+    # Validate that the agent instance has next_action method
+    if hasattr(agent, "next_action"):
         return agent
     else:
         raise Exception("Pickle file does not containt an agent of class 'Agent' or does not have next_action method.")
 
 def submit_agent(game_id, group_ids, agent, scores):
-    sub = Submission(game_id, group_ids, agent, scores)
-    sub.insert_one()
+    sub = Submission(
+        game_id=game_id,
+        group_ids=group_ids,
+        agent=agent,
+        scores=scores
+    )
+
+    db.db[Submission.collection].insert_one(sub.to_dict())
 
 def find_submissions_by_game(game_id):
-    Submission.find_all_by_game(game_id)
+    query = {
+        "game_id": game_id#ObjectId(game_id)
+    }
+    submissions = list()
+
+    for submission in db.db[Submission.collection].find(query):
+        submissions.append(Submission.from_dict(submission))
+
+    return submissions
