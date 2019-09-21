@@ -78,7 +78,7 @@ def main():
 
 
 def save_agent(agent, episodes):
-    with open(f"test_agents/pickles/FrozenLake_QLearning{episodes}.pickle", 'wb') as f:
+    with open(f"server/test_agents/pickles/FrozenLake_QLearning{episodes}.pickle", 'wb') as f:
         dill.dump(agent, f)
 
 
