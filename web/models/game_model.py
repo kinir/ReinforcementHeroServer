@@ -17,11 +17,12 @@ class Game:
     def insert_one(self):
         db.db[Game.collection].insert_one(self.to_dict())
     
-    def find_game(self, game_id):
+    def find_one(self, game_id):
         query = {'_id': game_id}
-        game_dict = db.db[Game.collection].find(query)
-        session_dict = get_session(game_id)
-        return game_dict.update(session_dict)
+        self = db.db[Game.collection].find(query)
+        return self
+        # submissions_dict = get_submissions(game_id)
+        # return game_dict.update(submissions_dict)
 
     def to_dict(self):
         return self.__dict__
