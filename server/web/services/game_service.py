@@ -17,10 +17,10 @@ def insert_game(game_name, env_id, due_date, num_of_episods):
 
 def find_game(game_id):
     query = {
-        "game_id": game_id
+        "_id": ObjectId(game_id)
     }
 
-    game = Game.from_dict(db.db[Game.collection].findOne(query))
+    game = Game.from_dict(db.db[Game.collection].find_one(query))
     game.set_submissions(submission_service.find_submissions_by_game(game_id))
 
     return game

@@ -55,7 +55,7 @@ def submit_agent(game_id, group_ids, agent, scores):
 
 def find_submissions_by_game(game_id):
     query = {
-        "game_id": game_id#ObjectId(game_id)
+        "game_id": game_id
     }
     submissions = list()
 

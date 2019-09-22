@@ -9,7 +9,7 @@ class Game:
 
         # Set only valid ids (for new game there is no need for self generated id)
         if ObjectId.is_valid(_id):
-            self._id = _id
+            self._id = str(_id)
             
         self.env_id = env_id
         self.game_name = game_name
@@ -19,6 +19,9 @@ class Game:
 
     def set_submissions(self, submissions):
         self.submissions = submissions
+
+        for submission in self.submissions:
+            del submission.agent
 
     @classmethod
     def from_dict(cls, dict):
