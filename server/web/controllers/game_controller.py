@@ -12,9 +12,7 @@ class Game(Resource):
             due_date = request.form["due_date"]
             num_of_episods = request.form["num_of_episods"]
 
-            submissions = list()
-
-            service.insert_game(game_name, env_id, due_date, num_of_episods, submissions)
+            service.insert_game(game_name, env_id, due_date, num_of_episods)
         
         except Exception as e:
             return repr(e)
