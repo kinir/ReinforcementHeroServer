@@ -1,17 +1,20 @@
-from datetime import datetime
+from bson.objectid import ObjectId
 
-from .. import db
+class Environment:
 
-class Envinronment:
+    collection = "environments"
 
-    collection = "envinronments"
-
-    def __init__(self, name, gym_env):
+    def __init__(self, _id=0, name="", gym_env=""):
+        # Set only valid ids (for new env there is no need for self generated id)
+        if ObjectId.is_valid(_id):
+            self._id = str(_id)
+            
         self.name = name
         self.gym_env = gym_env
 
-    def insert_one(self):
-        db.db[Envinronment.collection].insert_one(self.to_dict())
+    @classmethod
+    def from_dict(cls, dict):
+        return cls(**dict)
 
     def to_dict(self):
         return self.__dict__

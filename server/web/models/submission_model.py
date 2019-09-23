@@ -9,9 +9,13 @@ class Submission:
 
         # Set only valid ids (for new submission there is no need for self generated id)
         if ObjectId.is_valid(_id):
-            self._id = _id
+            self._id = str(_id)
             
-        self.game_id = game_id
+        if ObjectId.is_valid(game_id):
+            self.game_id = game_id
+        else:
+            raise Exception("Game id is not a valid ObjectId.")
+            
         self.group_ids = group_ids
         self.agent = agent
         self.submission_date = submission_date
