@@ -6,7 +6,7 @@ from .. import db
 from ..models.submission_model import Submission
 
 def evaluate_agent(agent):
-    env = gym.make('FrozenLake-v0')
+    env = gym.make("FrozenLake-v0")
 
     episodes = 10000
     total_reward = 0
@@ -57,9 +57,7 @@ def find_submissions_by_game(game_id):
     query = {
         "game_id": game_id
     }
-    submissions = list()
-
-    for submission in db.db[Submission.collection].find(query):
-        submissions.append(Submission.from_dict(submission))
+    
+    submissions = [Submission.from_dict(sub) for sub in db.db[Submission.collection].find(query)]
 
     return submissions

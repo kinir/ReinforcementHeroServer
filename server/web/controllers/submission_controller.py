@@ -24,6 +24,3 @@ class Submission(Resource):
             return repr(e)
 
         return True
-
-    # def get(self, game_id):
-    #     return service.find_submissions_by_game(game_id)
