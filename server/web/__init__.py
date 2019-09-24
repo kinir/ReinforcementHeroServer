@@ -4,6 +4,7 @@ import os
 from flask import Flask
 from flask.json import JSONEncoder
 from flask_pymongo import PyMongo
+from flask_cors import CORS
 
 from .models.environment_model import Environment
 from .models.game_model import Game
@@ -22,6 +23,9 @@ db = PyMongo()
 
 def init_app():
     app = Flask(__name__)
+
+    # Enable cross origin access
+    CORS(app)
 
     app.json_encoder = CustomJSONEncoder
     app.config["MONGO_URI"] = os.environ.get("DB")
