@@ -22,5 +22,9 @@ class Game(Resource):
 
     def get(self, game_id):
         game_properties = service.find_game(game_id)
-
         return jsonify(game_properties)
+
+class Games(Resource):
+    def get(self):
+        all_games = service.find_all_games()
+        return jsonify(all_games)

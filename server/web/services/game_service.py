@@ -24,3 +24,9 @@ def find_game(game_id):
     game.set_submissions(submission_service.find_submissions_by_game(game_id))
 
     return game
+
+
+def find_all_games():
+    games = [Game.from_dict(game) for game in db.db[Game.collection].find()]
+
+    return games
