@@ -5,17 +5,26 @@ class Game:
 
     collection = "games"
 
-    def __init__(self, _id=0, name="", env_id=0, due_date=datetime.now(), num_of_episods=10000, submissions=list()):
+    def __init__(self, _id=None, name=None, env_id=None, due_date=None, num_of_episods=None, submissions=None):
 
         # Set only valid ids (for new game there is no need for self generated id)
         if ObjectId.is_valid(_id):
-            self._id = str(_id)
+            self._id = _id
             
-        self.name = name
-        self.env_id = env_id
-        self.due_date = due_date
-        self.num_of_episods = num_of_episods
-        self.submissions = submissions
+        if name is not None:
+            self.name = name
+
+        if ObjectId.is_valid(env_id):
+            self.env_id = env_id
+
+        if due_date is not None:
+            self.due_date = due_date
+
+        if num_of_episods is not None:
+            self.num_of_episods = num_of_episods
+            
+        if submissions is not None:
+            self.submissions = submissions
 
     def set_submissions(self, submissions):
         self.submissions = submissions

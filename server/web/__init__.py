@@ -5,6 +5,7 @@ from flask import Flask
 from flask.json import JSONEncoder
 from flask_pymongo import PyMongo
 from flask_cors import CORS
+from bson.objectid import ObjectId
 
 from .models.environment_model import Environment
 from .models.game_model import Game
@@ -13,7 +14,8 @@ from .models.submission_model import Submission
 
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
-
+        if isinstance(obj, ObjectId):
+            return str(obj)
         if isinstance(obj, Game) or isinstance(obj, Submission) or isinstance(obj, Environment):
             return obj.to_dict()
             
