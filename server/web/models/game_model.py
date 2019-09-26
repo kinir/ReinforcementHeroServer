@@ -16,6 +16,8 @@ class Game:
 
         if ObjectId.is_valid(env_id):
             self.env_id = env_id
+        else:
+            raise Exception("Invalid environment id.")
 
         if due_date is not None:
             self.due_date = due_date
@@ -24,7 +26,7 @@ class Game:
             self.num_of_episods = num_of_episods
             
         if submissions is not None:
-            self.submissions = submissions
+            self.submissions = self.set_submissions(submissions)
 
     def set_submissions(self, submissions):
         self.submissions = submissions

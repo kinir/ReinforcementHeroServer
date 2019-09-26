@@ -17,6 +17,7 @@ class Environment(Resource):
 
         return True
 
+class Environments(Resource):
     def get(self):
         envs = service.find_all_envs()
         

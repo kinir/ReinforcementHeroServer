@@ -11,7 +11,8 @@ def insert_game(name, env_id, due_date, num_of_episods):
         name=name,
         env_id=env_id,
         due_date=due_date,
-        num_of_episods=num_of_episods)
+        num_of_episods=num_of_episods
+    )
 
     db.db[Game.collection].insert_one(game.to_dict())
 
