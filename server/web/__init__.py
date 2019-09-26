@@ -1,10 +1,12 @@
 import base64
+from datetime import datetime
 import os
 
+from bson.objectid import ObjectId
 from flask import Flask
 from flask.json import JSONEncoder
-from flask_pymongo import PyMongo
 from flask_cors import CORS
+from flask_pymongo import PyMongo
 
 from .models.environment_model import Environment
 from .models.game_model import Game
@@ -14,7 +16,11 @@ from .models.submission_model import Submission
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
 
-        if isinstance(obj, Game) or isinstance(obj, Submission) or isinstance(obj, Environment):
+        if isinstance(obj, ObjectId):
+            return str(obj)
+        elif isinstance(obj, datetime):
+            return str(obj)
+        elif isinstance(obj, Game) or isinstance(obj, Submission) or isinstance(obj, Environment):
             return obj.to_dict()
             
         return JSONEncoder.default(self, obj)

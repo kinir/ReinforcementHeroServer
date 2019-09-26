@@ -2,7 +2,6 @@ import dill
 import gym
 from bson.objectid import ObjectId
 
-from .. import db
 from ..models.submission_model import Submission
 
 def evaluate_agent(agent):

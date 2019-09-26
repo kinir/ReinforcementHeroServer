@@ -21,6 +21,6 @@ class Game(Resource):
         return True
 
     def get(self, game_id):
-        game_properties = service.find_game(game_id)
+        game = service.find_game(game_id)
 
-        return jsonify(game_properties)
+        return jsonify(game)

@@ -9,13 +9,18 @@ class Game:
 
         # Set only valid ids (for new game there is no need for self generated id)
         if ObjectId.is_valid(_id):
-            self._id = str(_id)
+            self._id = _id
             
         self.name = name
-        self.env_id = env_id
-        self.due_date = due_date
+
+        if ObjectId.is_valid(env_id):
+            self.env_id = env_id
+        else:
+            raise Exception("Invalid environment id.")
+
+        self.due_date = datetime.strptime(due_date, "%Y-%m-%dT%H:%M:%S")
         self.num_of_episods = num_of_episods
-        self.submissions = submissions
+        self.submissions = self.set_submissions(submissions)
 
     def set_submissions(self, submissions):
         self.submissions = submissions
