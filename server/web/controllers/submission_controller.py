@@ -1,5 +1,6 @@
 from flask import request
 from flask_restful import Resource
+from flask import jsonify
 
 from ..services import submission_service as service
 
@@ -24,3 +25,8 @@ class Submission(Resource):
             return repr(e)
 
         return True
+    
+    def get(self, student_id):
+        result = service.find_submissions_by_student(student_id)
+        
+        return jsonify(result)

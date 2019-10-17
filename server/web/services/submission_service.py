@@ -46,7 +46,7 @@ def validate_pickle(pickled_agent):
 def submit_agent(game_id, group_ids, agent, scores):
     sub = Submission(
         game_id=game_id,
-        group_ids=group_ids,
+        group_ids=map(str.strip, group_ids.split(',')),
         agent=agent,
         scores=scores
     )
@@ -59,5 +59,14 @@ def find_submissions_by_game(game_id):
     }
     
     submissions = [Submission.from_dict(sub) for sub in db.db[Submission.collection].find(query)]
+
+    return submissions
+
+def find_submissions_by_student(studen_id):
+    query = {
+        "group_ids": { "$elemMatch": { "$eq": studen_id } }
+    }
+
+    submissions = [Submission.from_dict(sub) for sub in db.db[Submission.collection].find(query, { "agent": 0 })]
 
     return submissions

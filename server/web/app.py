@@ -14,7 +14,7 @@ app.app_context().push()
 api = Api(app)
 api.add_resource(Games, "/api/game", endpoint="games")
 api.add_resource(Game, "/api/game", "/api/game/<game_id>", endpoint="game")
-api.add_resource(Submission, "/api/submit", "/api/submit/<game_id>")
+api.add_resource(Submission, "/api/submit", "/api/submit/<student_id>")
 api.add_resource(Environment, "/api/env")
 
 # Test resource
