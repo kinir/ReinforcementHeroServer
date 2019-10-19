@@ -1,3 +1,6 @@
+import gym
+import dill
+
 from .. import database
 from ..models.submission_model import Submission
 

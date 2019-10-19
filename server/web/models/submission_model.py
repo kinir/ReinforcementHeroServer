@@ -17,7 +17,7 @@ class Submission:
             raise Exception("Game id is not a valid ObjectId.")
         
         if group_ids is not None:    
-            self.group_ids = group_ids
+            self.group_ids = list(group_ids)
         
         if agent is not None:
             self.agent = agent
