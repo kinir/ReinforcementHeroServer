@@ -2,16 +2,8 @@ from flask_restful import Api
 
 from . import init_app
 from .controllers.submission_controller import Submission
-<<<<<<< HEAD
 from .controllers.game_controller import Game, Games
-from .controllers.environment_controller import Environment
-||||||| merged common ancestors
-from .controllers.game_controller import Game
-from .controllers.environment_controller import Environment
-=======
-from .controllers.game_controller import Game
 from .controllers.environment_controller import Environment, Environments
->>>>>>> Changes.
 from .controllers.test_controller import Test
 
 # Init app and db
