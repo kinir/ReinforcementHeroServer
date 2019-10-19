@@ -5,25 +5,28 @@ class Submission:
 
     collection = "submissions"
 
-    def __init__(self, _id=None, game_id=None, group_ids=None, agent=None, submission_date=datetime.now(), scores={"simpleAvg": 0}):
-            
+    def __init__(self, _id=None, game_id=None, group_ids=None, agent=None, submission_date=None, scores=None):
+
         # Set only valid ids (for new submission there is no need for self generated id)
         if ObjectId.is_valid(_id):
-            self._id = str(_id)
+            self._id = _id
             
-        if ObjectId.is_valid(game_id):
-            self.game_id = game_id
-        else:
-            raise Exception("Game id is not a valid ObjectId.")
-
+        if game_id is not None:
+            if ObjectId.is_valid(game_id):
+                self.game_id = game_id
+            else:
+                raise Exception("Game id is not a valid ObjectId.")
+        
         if group_ids is not None:    
-            self.group_ids = group_ids
+            self.group_ids = list(group_ids)
         
         if agent is not None:
             self.agent = agent
         
         if submission_date is not None:
-            self.submission_date = submission_date
+            self.submission_date = submission_date \
+                                   if isinstance(submission_date, datetime) \
+                                   else datetime.strptime(submission_date, "%Y-%m-%dT%H:%M:%S")
 
         if scores is not None:
             self.scores = scores

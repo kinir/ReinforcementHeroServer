@@ -1,4 +1,4 @@
-from .. import db
+from .. import database
 from ..models.environment_model import Environment
 
 def insert_env(name, gym_env):
@@ -7,7 +7,7 @@ def insert_env(name, gym_env):
         gym_env=gym_env
     )
 
-    db.db[Environment.collection].insert_one(env.to_dict())
+    database.insert_one(Environment.collection, env.to_dict())
 
 def find_all_envs():
-    return [Environment.from_dict(env) for env in db.db[Environment.collection].find()]
+    return [Environment.from_dict(env) for env in database.find_all_documents(Environment.collection)]

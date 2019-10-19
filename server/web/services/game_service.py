@@ -1,8 +1,4 @@
-import dill
-import gym
-from bson.objectid import ObjectId
-
-from .. import db
+from .. import database
 from ..models.game_model import Game
 from ..services import submission_service as submission_service
 
@@ -11,22 +7,18 @@ def insert_game(name, env_id, due_date, num_of_episods):
         name=name,
         env_id=env_id,
         due_date=due_date,
-        num_of_episods=num_of_episods)
+        num_of_episods=num_of_episods
+    )
 
-    db.db[Game.collection].insert_one(game.to_dict())
+    database.insert_one(Game.collection, game.to_dict())
 
 def find_game(game_id):
-    query = {
-        "_id": ObjectId(game_id)
-    }
-
-    game = Game.from_dict(db.db[Game.collection].find_one(query))
+    game = Game.from_dict(database.find_by_id(Game.collection, game_id))
     game.set_submissions(submission_service.find_submissions_by_game(game_id))
 
     return game
 
-
 def find_all_games():
-    games = [Game.from_dict(game) for game in db.db[Game.collection].find({}, { "_id": 1, "name": 1 })]
+    games = [Game.from_dict(game) for game in database.find_all_documents(Game.collection, show_fields=["_id", "name"])]
 
     return games

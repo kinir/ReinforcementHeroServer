@@ -1,10 +1,11 @@
 import requests
 import threading
 import time
+import multiprocessing
 
 def thread_function(i):
     start_time = time.time()
-    url = "http://127.0.0.1:5000/api/test"
+    url = f"http://127.0.0.1:5000/api/test/{i}"
 
     response = requests.request("GET", url)
 
@@ -13,15 +14,17 @@ def thread_function(i):
 
 def main():
     start_time = time.time()
-    threads = list()
+    workers = list()
     
-    for i in range(8):
-        x = threading.Thread(target=thread_function, args=(i,))
-        threads.append(x)
+    for i in range(2):
+        #x = threading.Thread(target=thread_function, args=(i,))
+        x = multiprocessing.Process(target=thread_function, args=(i,))
+        workers.append(x)
         x.start()
         print(f"Started {i}")
+        time.sleep(5)
 
-    for x in threads:
+    for x in workers:
         x.join()
 
     print(f"All {time.time() - start_time}")

@@ -1,8 +1,7 @@
-import dill
 import gym
-from bson.objectid import ObjectId
+import dill
 
-from .. import db
+from .. import database
 from ..models.submission_model import Submission
 
 def evaluate_agent(agent):
@@ -51,22 +50,14 @@ def submit_agent(game_id, group_ids, agent, scores):
         scores=scores
     )
 
-    db.db[Submission.collection].insert_one(sub.to_dict())
+    database.insert_one(Submission.collection, sub.to_dict())
 
-def find_submissions_by_game(game_id):
-    query = {
-        "game_id": game_id
-    }
-    
-    submissions = [Submission.from_dict(sub) for sub in db.db[Submission.collection].find(query)]
+def find_submissions_by_game(game_id):    
+    submissions = [Submission.from_dict(sub) for sub in database.find_submissions_by_game(game_id)]
 
     return submissions
 
-def find_submissions_by_student(studen_id):
-    query = {
-        "group_ids": { "$elemMatch": { "$eq": studen_id } }
-    }
-
-    submissions = [Submission.from_dict(sub) for sub in db.db[Submission.collection].find(query, { "agent": 0 })]
+def find_submissions_by_student(student_id):
+    submissions = [Submission.from_dict(sub) for sub in database.find_submissions_by_student(student_id, hide_fields=["agent"])]
 
     return submissions
