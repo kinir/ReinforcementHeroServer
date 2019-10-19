@@ -9,9 +9,9 @@ class Submission:
 
         # Set only valid ids (for new submission there is no need for self generated id)
         if ObjectId.is_valid(_id):
-            self._id = str(_id)
+            self._id = _id
             
-        if ObjectId.is_valid(game_id):
+        if game_id is not None and ObjectId.is_valid(game_id):
             self.game_id = game_id
         else:
             raise Exception("Game id is not a valid ObjectId.")
