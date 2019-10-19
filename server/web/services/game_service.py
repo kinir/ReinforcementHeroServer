@@ -19,6 +19,6 @@ def find_game(game_id):
     return game
 
 def find_all_games():
-    games = [Game.from_dict(game) for game in database.find_all_documents(Game.collection, show_fields=["_id", "game"])]
+    games = [Game.from_dict(game) for game in database.find_all_documents(Game.collection, show_fields=["_id", "name"])]
 
     return games

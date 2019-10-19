@@ -21,7 +21,10 @@ class Game(Resource):
         return True
 
     def get(self, game_id):
-        game = service.find_game(game_id)
+        try:
+            game = service.find_game(game_id)
+        except Exception as e:
+            return repr(e)
 
         return jsonify(game)
 

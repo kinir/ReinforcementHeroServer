@@ -14,10 +14,11 @@ class Game:
         if name is not None:
             self.name = name
 
-        if env_id is not None and ObjectId.is_valid(env_id):
-            self.env_id = env_id
-        else:
-            raise Exception("Environment id is not a valid ObjectId.")
+        if env_id is not None:
+            if ObjectId.is_valid(env_id):
+                self.env_id = env_id
+            else:
+                raise Exception("Environment id is not a valid ObjectId.")
 
         if due_date is not None:
             self.due_date = due_date
