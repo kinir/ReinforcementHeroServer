@@ -14,7 +14,12 @@ def find_by_id(collection, id, show_fields=None, hide_fields=None):
         "_id": ObjectId(id)
     }
 
-    return db.db[collection].find_one(query, construct_projection(show_fields, hide_fields))
+    doc = db.db[collection].find_one(query, construct_projection(show_fields, hide_fields))
+
+    if doc is None:
+        raise Exception("Could not find an entry with that specific id.")
+
+    return doc
 
 def find_submissions_by_game(game_id, show_fields=None, hide_fields=None):
     query = {
