@@ -26,7 +26,6 @@ def find_game(game_id):
 
     return game
 
-
 def find_all_games():
     games = [Game.from_dict(game) for game in db.db[Game.collection].find({}, { "_id": 1, "name": 1 })]
 
