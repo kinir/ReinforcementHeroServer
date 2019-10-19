@@ -31,9 +31,15 @@ def find_submissions_by_student(student_id, show_fields=None, hide_fields=None):
     return db.db[Submission.collection].find(query, construct_projection(show_fields, hide_fields))
 
 def construct_projection(show_fields=None, hide_fields=None):
-    #if show_fields is None and hide_fields is None:
-    #    projection = {}
-    #else:
+    if show_fields is None:
+        show_fields = []
+    
+    if hide_fields is None:
+        hide_fields = []
+        
     projection = { field_name: 1 if field_name in show_fields else 0 for field_name in show_fields + hide_fields }
+
+    if len(projection) == 0:
+        projection = None
 
     return projection
