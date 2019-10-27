@@ -5,7 +5,7 @@ class Submission:
 
     collection = "submissions"
 
-    def __init__(self, _id=None, game_id=None, group_ids=None, agent=None, submission_date=None, scores=None):
+    def __init__(self, _id=None, game_id=None, game_name=None, group_ids=None, agent=None, submission_date=None, scores=None):
 
         # Set only valid ids (for new submission there is no need for self generated id)
         if ObjectId.is_valid(_id):
@@ -13,11 +13,14 @@ class Submission:
             
         if game_id is not None:
             if ObjectId.is_valid(game_id):
-                self.game_id = game_id
+                self.game_id = game_id if isinstance(game_id, ObjectId) else ObjectId(game_id)
             else:
                 raise Exception("Game id is not a valid ObjectId.")
+
+        if game_name is not None:
+            self.game_name = game_name
         
-        if group_ids is not None:    
+        if group_ids is not None:
             self.group_ids = list(group_ids)
         
         if agent is not None:

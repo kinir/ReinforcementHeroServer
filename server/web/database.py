@@ -29,11 +29,23 @@ def find_submissions_by_game(game_id, show_fields=None, hide_fields=None):
     return db.db[Submission.collection].find(query, construct_projection(show_fields, hide_fields))
     
 def find_submissions_by_student(student_id, show_fields=None, hide_fields=None):
-    query = {
-        "group_ids": { "$elemMatch": { "$eq": student_id } }
-    }
+    query = [
+        { "$match": { "group_ids": { "$elemMatch": { "$eq": student_id }}} },
+        {
+            "$lookup": {
+                "from" : "games",
+                "localField" : "game_id",
+                "foreignField" : "_id",
+                "as" : "game"
+            }
+        },
+        {
+            "$replaceRoot": { "newRoot": { "$mergeObjects": [ { "$arrayElemAt": [ "$game", 0 ] }, "$$ROOT" ] } }
+        },
+        { "$project": dict({ "game_name": "$name" }, **construct_projection(show_fields, hide_fields)) }
+    ]
 
-    return db.db[Submission.collection].find(query, construct_projection(show_fields, hide_fields))
+    return db.db[Submission.collection].aggregate(query)
 
 def construct_projection(show_fields=None, hide_fields=None):
     if show_fields is None:
