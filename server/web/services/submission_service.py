@@ -1,5 +1,6 @@
 import gym
 import dill
+from datetime import datetime
 
 from .. import database
 from ..models.submission_model import Submission
@@ -47,6 +48,7 @@ def submit_agent(game_id, group_ids, agent, scores):
         game_id=game_id,
         group_ids=map(str.strip, group_ids.split(',')),
         agent=agent,
+        submission_date=datetime.now(),
         scores=scores
     )
 
@@ -58,6 +60,9 @@ def find_submissions_by_game(game_id):
     return submissions
 
 def find_submissions_by_student(student_id):
-    submissions = [Submission.from_dict(sub) for sub in database.find_submissions_by_student(student_id, hide_fields=["agent"])]
+    submissions = [Submission.from_dict(sub) for sub in database.find_submissions_by_student(student_id, show_fields=["game_id",
+                                                                                                                      "group_ids",
+                                                                                                                      "submission_date",
+                                                                                                                      "scores"])]
 
     return submissions

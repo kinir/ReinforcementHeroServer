@@ -18,7 +18,7 @@ class CustomJSONEncoder(JSONEncoder):
         if isinstance(obj, ObjectId):
             return str(obj)
         elif isinstance(obj, datetime):
-            return str(obj)
+            return obj.strftime("%Y-%m-%dT%H:%M:%S")
         elif isinstance(obj, Game) or isinstance(obj, Submission) or isinstance(obj, Environment):
             return obj.to_dict()
             
