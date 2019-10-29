@@ -1,21 +1,16 @@
-from flask import request
-from flask import jsonify
+from flask import request, jsonify, abort
 from flask_restful import Resource
 
 from ..services import environment_service as service
 
 class Environment(Resource):
     def put(self):
-        try:
-            name = request.form["name"]
-            gym_env = request.form["gym_env"]
-            
-            service.insert_env(name, gym_env)
+        name = request.form["name"]
+        gym_env = request.form["gym_env"]
         
-        except Exception as e:
-            return repr(e)
+        inserted_id = service.insert_env(name, gym_env)
 
-        return True
+        return jsonify({ "inserted_id": inserted_id })
 
 class Environments(Resource):
     def get(self):

@@ -9,6 +9,7 @@ from flask_cors import CORS
 from bson.objectid import ObjectId
 from flask_pymongo import PyMongo
 
+from .error_handler import handle_exception
 from .models.environment_model import Environment
 from .models.game_model import Game
 from .models.submission_model import Submission
@@ -28,6 +29,7 @@ db = PyMongo()
 
 def init_app():
     app = Flask(__name__)
+    app.register_error_handler(Exception, handle_exception)
 
     # Enable cross origin access
     CORS(app)

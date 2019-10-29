@@ -13,7 +13,7 @@ class Submission:
             
         if game_id is not None:
             if ObjectId.is_valid(game_id):
-                self.game_id = game_id if isinstance(game_id, ObjectId) else ObjectId(game_id)
+                self.game_id = ObjectId(game_id)
             else:
                 raise Exception("Game id is not a valid ObjectId.")
 

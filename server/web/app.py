@@ -20,3 +20,10 @@ api.add_resource(Environment, "/api/env", endpoint="environment")
 
 # Test resource
 api.add_resource(Test, "/api/test/<id>")
+
+# Raise flask exception instead of flask-restful exception
+def raise_exception(sender, exception, **extra):
+    raise exception
+
+from flask_restful import got_request_exception
+got_request_exception.connect(raise_exception, app)
