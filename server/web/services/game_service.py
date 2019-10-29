@@ -10,11 +10,10 @@ def insert_game(name, env_id, due_date, num_of_episods):
         num_of_episods=num_of_episods
     )
 
-    database.insert_one(Game.collection, game.to_dict())
+    return database.insert_one(Game.collection, game.to_dict())
 
 def find_game(game_id):
-    game = Game.from_dict(database.find_by_id(Game.collection, game_id))
-    game.set_submissions(submission_service.find_submissions_by_game(game_id))
+    game = Game.from_dict(list(database.find_single_game(game_id))[0])
 
     return game
 

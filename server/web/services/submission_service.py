@@ -52,7 +52,7 @@ def submit_agent(game_id, group_ids, agent, scores):
         scores=scores
     )
 
-    database.insert_one(Submission.collection, sub.to_dict())
+    return database.insert_one_submission(game_id, sub.to_dict())
 
 def find_submissions_by_game(game_id):    
     submissions = [Submission.from_dict(sub) for sub in database.find_submissions_by_game(game_id)]
