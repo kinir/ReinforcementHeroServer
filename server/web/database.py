@@ -1,6 +1,7 @@
 from . import db
 from .models.submission_model import Submission
 from .models.game_model import Game
+from .models.environment_model import Environment
 
 from bson.objectid import ObjectId
 
@@ -34,7 +35,7 @@ def find_by_id(collection, id, show_fields=None, hide_fields=None):
 
     return doc
 
-def find_single_game(game_id, show_fields=None, hide_fields=None):
+def find_single_game(game_id):
     query = [
         { "$match": { "_id": ObjectId(game_id) }},
         {
@@ -61,6 +62,22 @@ def find_submissions_by_game(game_id, show_fields=None, hide_fields=None):
     
     return db.db[Submission.collection].find(query, construct_projection(show_fields, hide_fields))
     
+def find_env_by_game(game_id, show_fields=None, hide_fields=None):
+    query = [
+        { "$match": { "_id": ObjectId(game_id) }},
+        {
+            "$lookup": {
+                "from" : "environments",
+                "localField" : "env_id",
+                "foreignField" : "_id",
+                "as" : "env"
+            }
+        },
+        { "$project": construct_projection(show_fields, hide_fields) }
+    ]
+
+    return db.db[Game.collection].aggregate(query)
+
 def find_submissions_by_student(student_id, show_fields=None, hide_fields=None):
     query = [
         { "$match": { "group_ids": { "$elemMatch": { "$eq": student_id }}} },

@@ -10,9 +10,9 @@ class Game(Resource):
         name = request.form["name"]
         env_id = request.form["env_id"]
         due_date = request.form["due_date"]
-        num_of_episods = request.form["num_of_episods"]
+        num_of_episodes = request.form["num_of_episodes"]
 
-        inserted_id = service.insert_game(name, env_id, due_date, num_of_episods)
+        inserted_id = service.insert_game(name, env_id, due_date, num_of_episodes)
 
         return jsonify({ "inserted_id": inserted_id })
 

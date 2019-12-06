@@ -7,7 +7,7 @@ class Game:
 
     collection = "games"
 
-    def __init__(self, _id=None, name=None, env_id=None, due_date=None, num_of_episods=None, submissions=None):
+    def __init__(self, _id=None, name=None, env_id=None, due_date=None, num_of_episodes=None, submissions=None):
 
         # Set only valid ids (for new game there is no need for self generated id)
         if ObjectId.is_valid(_id):
@@ -25,8 +25,8 @@ class Game:
         if due_date is not None:
             self.due_date = due_date
 
-        if num_of_episods is not None:
-            self.num_of_episods = num_of_episods
+        if num_of_episodes is not None:
+            self.num_of_episodes = int(num_of_episodes)
             
         if submissions is not None:
             self.set_submissions(submissions)
