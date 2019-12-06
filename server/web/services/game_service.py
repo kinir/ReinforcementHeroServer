@@ -2,12 +2,12 @@ from .. import database
 from ..models.game_model import Game
 from ..services import submission_service as submission_service
 
-def insert_game(name, env_id, due_date, num_of_episods):
+def insert_game(name, env_id, due_date, num_of_episodes):
     game = Game(
         name=name,
         env_id=env_id,
         due_date=due_date,
-        num_of_episods=num_of_episods
+        num_of_episodes=num_of_episodes
     )
 
     return database.insert_one(Game.collection, game.to_dict())

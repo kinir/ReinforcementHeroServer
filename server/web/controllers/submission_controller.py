@@ -14,7 +14,7 @@ class Submission(Resource):
         agent = service.validate_pickle(pickled_agent)
 
         # Evaluate the scores of the agent
-        scores = service.evaluate_agent(agent)
+        scores = service.evaluate_agent(agent, game_id)
 
         # Save the agent with his score to the db
         inserted_id = service.submit_agent(game_id, group_ids, pickled_agent, scores)
