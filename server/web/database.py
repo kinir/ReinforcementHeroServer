@@ -62,7 +62,11 @@ def find_submissions_by_game(game_id, show_fields=None, hide_fields=None):
     
     return db.db[Submission.collection].find(query, construct_projection(show_fields, hide_fields))
     
+<<<<<<< HEAD
 def find_env_by_game(game_id, show_fields=None, hide_fields=None):
+=======
+def find_env_name_by_game_id(game_id, show_fields=None, hide_fields=None):
+>>>>>>> 37bb70181f48cf5a40931d50a1311692efef8a4c
     query = [
         { "$match": { "_id": ObjectId(game_id) }},
         {
@@ -73,6 +77,12 @@ def find_env_by_game(game_id, show_fields=None, hide_fields=None):
                 "as" : "env"
             }
         },
+<<<<<<< HEAD
+=======
+        {
+            "$replaceRoot": { "newRoot": { "$mergeObjects": [ { "$arrayElemAt": [ "$env", 0 ] }, "$$ROOT" ] } }
+        },
+>>>>>>> 37bb70181f48cf5a40931d50a1311692efef8a4c
         { "$project": construct_projection(show_fields, hide_fields) }
     ]
 
