@@ -11,3 +11,8 @@ def insert_env(name, gym_env):
 
 def find_all_envs():
     return [Environment.from_dict(env) for env in database.find_all_documents(Environment.collection)]
+
+def find_env(env_id):
+    env = Environment.from_dict(database.find_by_id(Environment.collection, env_id))
+
+    return env
