@@ -26,11 +26,7 @@ class Game:
             self.due_date = due_date
 
         if num_of_episodes is not None:
-<<<<<<< HEAD
             self.num_of_episodes = int(num_of_episodes)
-=======
-            self.num_of_episodes = num_of_episodes
->>>>>>> 37bb70181f48cf5a40931d50a1311692efef8a4c
             
         if submissions is not None:
             self.set_submissions(submissions)
