@@ -23,11 +23,11 @@ def find_all_games():
 
     return games
 
-def submit_random_agent(game_id, gym_env):
+def submit_random_agent(game_id, gym_env, episodes):
     random_agent = RandomAgent(gym_env)
 
     # Evaluate the scores of the agent
-    scores = submission_service.evaluate_agent(random_agent)
+    scores = submission_service.evaluate_agent(random_agent, gym_env, episodes)
 
     # Save the agent with his score to the db
     inserted_id = submission_service.submit_agent(game_id, "random agent", random_agent.get_pickled_agent(), scores)
