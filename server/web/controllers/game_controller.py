@@ -11,7 +11,7 @@ class Game(Resource):
         name = request.form["name"]
         env_id = request.form["env_id"]
         due_date = request.form["due_date"]
-        num_of_episodes = request.form["num_of_episodes"]
+        num_of_episodes = int(request.form["num_of_episodes"])
 
         inserted_id = service.insert_game(name, env_id, due_date, num_of_episodes)
 
@@ -19,7 +19,7 @@ class Game(Resource):
         env = env_service.find_env(env_id)
 
         # Generate a random agent and submit as a default agent
-        service.submit_random_agent(inserted_id, env.gym_env)
+        service.submit_random_agent(inserted_id, env.gym_env, num_of_episodes)
 
         return jsonify({ "inserted_id": inserted_id })
 
