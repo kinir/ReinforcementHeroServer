@@ -26,7 +26,20 @@ class Game:
             self.due_date = due_date
 
         if num_of_episodes is not None:
+<<<<<<< HEAD
             self.num_of_episodes = int(num_of_episodes)
+||||||| merged common ancestors
+<<<<<<< HEAD
+            self.num_of_episodes = int(num_of_episodes)
+=======
+            self.num_of_episodes = num_of_episodes
+>>>>>>> 37bb70181f48cf5a40931d50a1311692efef8a4c
+=======
+            try:
+                self.num_of_episodes = int(num_of_episodes)
+            except ValueError:
+                raise ValueError("Number of episodes is not a valid number.")
+>>>>>>> de3f7df959f41026b7a9162e965acd4523f5b08b
             
         if submissions is not None:
             self.set_submissions(submissions)
