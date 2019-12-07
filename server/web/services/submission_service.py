@@ -6,14 +6,10 @@ from .. import database
 from ..models.submission_model import Submission
 from ..models.environment_model import Environment
 from ..models.game_model import Game
-from ..services import game_service as game_service
-from ..services import environment_service as environment_service 
 
-def evaluate_agent(agent, game_id):
-    env_name = environment_service.find_env_by_game(game_id).gym_env
-    env = gym.make(env_name)
+def evaluate_agent(agent, gym_env, episodes):
+    env = gym.make(gym_env)
 
-    episodes = game_service.find_game(game_id).num_of_episodes
     total_reward = 0
 
     for episode in range(episodes):
