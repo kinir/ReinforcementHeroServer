@@ -9,9 +9,9 @@ class Agent:
         self.epsilon = 1
         self.max_epsilon = 1.0
         self.min_epsilon = 0.01
-        self.decay_rate = 0.0005
+        self.decay_rate = 0.00045
         self.lr_rate = 0.81
-        self.gamma = 0.96
+        self.gamma = 0.865
 
         self.action_space = env.action_space
         self.Q = np.zeros((env.observation_space.n, env.action_space.n))
@@ -43,7 +43,7 @@ class Agent:
 
 
 def main():
-    env = gym.make('FrozenLake-v0')
+    env = gym.make('FrozenLake8x8-v0')
     agent = Agent(env)
 
     episodes = 100000
@@ -66,8 +66,10 @@ def main():
         total_reward += episode_reward
         # env.render()
 
-        agent.decay_epsilon(i)
-        print(agent.epsilon)
+        if episode_reward == 1:
+            agent.decay_epsilon(i)
+        #print(agent.epsilon)
+        print(f"{i}) {total_reward}, {episode_reward}, {agent.epsilon}")
 
     print(total_reward / episodes)
     print(agent.Q)
@@ -78,7 +80,7 @@ def main():
 
 
 def save_agent(agent, episodes):
-    with open(f"server/test_agents/pickles/FrozenLake_QLearning{episodes}.pickle", 'wb') as f:
+    with open(f"test_agents/pickles/FrozenLake8x8_QLearning{episodes}.pickle", 'wb') as f:
         dill.dump(agent, f)
 
 
