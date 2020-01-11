@@ -1,5 +1,9 @@
 import gym
 import gym_maze
+
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+
 import dill
 dill.settings['recurse'] = True
 
