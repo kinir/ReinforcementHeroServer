@@ -11,16 +11,14 @@ def evaluate_agent(agent, gym_env, episodes):
     env = gym.make(gym_env)
 
     total_reward = 0
-
-    for episode in range(episodes):
+    for _ in range(episodes):
         curr_state = env.reset()
         episode_reward = 0
         done = False
-
         while not done:
             action = agent.next_action(curr_state)
 
-            next_state, reward, done, info = env.step(action)
+            next_state, reward, done, _ = env.step(action)
             episode_reward += reward
 
             curr_state = next_state
@@ -28,7 +26,7 @@ def evaluate_agent(agent, gym_env, episodes):
         total_reward += episode_reward
 
     scores = {
-        "simpleAvg": total_reward / episode
+        "simpleAvg": total_reward / episodes
     }
 
     return scores
