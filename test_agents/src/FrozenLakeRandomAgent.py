@@ -38,7 +38,7 @@ def main():
 
     env.close()
 
-    save_agent(agent)
+    #save_agent(agent)
 
 
 def save_agent(agent):

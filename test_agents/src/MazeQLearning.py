@@ -10,8 +10,8 @@ class Agent:
         self.epsilon = 1
         self.max_epsilon = 1.0
         self.min_epsilon = 0.01
-        self.decay_rate = 0.00045
-        self.lr_rate = 0.81
+        self.decay_rate = 0.02
+        self.lr_rate = 0.95
         self.gamma = 0.865
 
         self.observation_space = env.observation_space
@@ -22,25 +22,26 @@ class Agent:
         if np.random.uniform(0, 1) < self.epsilon:
             action = self.action_space.sample()
         else:
-            action = np.argmax(self.Q[state, :])
+            action = int(np.argmax(self.Q[state]))
 
         return action
+        #return self.action_space.sample()
     
     def decay_epsilon(self, episode):
         self.epsilon = self.min_epsilon + (self.max_epsilon - self.min_epsilon) * np.exp(-(self.decay_rate * episode))
 
     def learn(self, state, next_state, reward, action, done):
-        predict = self.Q[state, action]
+        predict = self.Q[state][action]
 
         if done:
             target  = reward
         else:
-            target = reward + self.gamma * np.max(self.Q[next_state, :])
+            target = reward + self.gamma * np.max(self.Q[next_state])
 
-        self.Q[state, action] = self.Q[state, action] + self.lr_rate * (target - predict)
+        self.Q[state][action] = self.Q[state][action] + self.lr_rate * (target - predict)
 
     def next_action(self, state):
-        action = np.argmax(self.Q[state, :])
+        action = int(np.argmax(self.Q[self.state_mapping(state)]))
         return action
 
     def state_mapping(self, state):
@@ -66,15 +67,15 @@ def main():
     env = gym.make('maze-sample-10x10-v0')
     agent = Agent(env)
 
-    episodes = 10
+    episodes = 100
     total_reward = 0
 
 
     #env.render()
 
     for i in range(episodes):
-        curr_state = env.reset()
-        curr_state = agent.state_mapping(curr_state)
+        curr_state = tuple(env.reset().astype(int))
+        #curr_state = agent.state_mapping(curr_state)
 
         episode_reward = 0
         done = False
@@ -82,7 +83,10 @@ def main():
         while not done:
             action = agent.choose_action(curr_state)
             next_state, reward, done, _ = env.step(action)
-            next_state = agent.state_mapping(next_state)
+            next_state = tuple(next_state.astype(int))
+            #if next_state[0] !=  agent.state_mapping(next_state)[0]:
+                #print(next_state, agent.state_mapping(next_state))
+            #next_state = agent.state_mapping(next_state)
 
             agent.learn(curr_state, next_state, reward, action, done)
 
@@ -92,17 +96,18 @@ def main():
 
         total_reward += episode_reward
 
-        if episode_reward == 1:
+        if reward == 1:
             agent.decay_epsilon(i)
-        #print(agent.epsilon)
-        print(f"{i}) {total_reward}, {episode_reward}, {agent.epsilon}")
 
+        #print(f"{i}) {total_reward}, {episode_reward}, {agent.epsilon}")
+        print(episode_reward)
+
+    #print(agent.Q)
     print(total_reward / episodes)
-    print(agent.Q)
 
     env.close()
 
-    save_agent(agent, episodes)
+    #save_agent(agent, episodes)
 
 
 def save_agent(agent, episodes):

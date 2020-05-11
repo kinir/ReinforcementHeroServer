@@ -43,10 +43,10 @@ class Agent:
 
 
 def main():
-    env = gym.make('FrozenLake8x8-v0')
+    env = gym.make('FrozenLake-v0')
     agent = Agent(env)
 
-    episodes = 100000
+    episodes = 10000
     total_reward = 0
 
     for i in range(episodes):
@@ -69,14 +69,15 @@ def main():
         if episode_reward == 1:
             agent.decay_epsilon(i)
         #print(agent.epsilon)
-        print(f"{i}) {total_reward}, {episode_reward}, {agent.epsilon}")
+        #print(f"{i}) {total_reward}, {episode_reward}, {agent.epsilon}")
+        print(total_reward / (i + 1))
 
     print(total_reward / episodes)
-    print(agent.Q)
+    #print(agent.Q)
 
     env.close()
 
-    save_agent(agent, episodes)
+    #save_agent(agent, episodes)
 
 
 def save_agent(agent, episodes):
